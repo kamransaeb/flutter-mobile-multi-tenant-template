@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "932198365713",
+    "project_id": "yorsho-dev",
+    "storage_bucket": "yorsho-dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932198365713:android:401ba6df311a43b2248fb0",
+        "android_client_info": {
+          "package_name": "com.yorsho.mobile.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPePNiIZ3SKe0kCjGs0NHUWB4W0zLewNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

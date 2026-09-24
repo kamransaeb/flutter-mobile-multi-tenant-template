@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "980298807212",
+    "project_id": "yorsho-staging",
+    "storage_bucket": "yorsho-staging.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980298807212:android:704fc69e7c05f9940bec09",
+        "android_client_info": {
+          "package_name": "com.yorsho.mobile.staging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3-viwa5ANhRpZT1h_RPgGvFNBGTb6CHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

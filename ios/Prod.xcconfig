@@ -1,0 +1,6 @@
+#include "Flutter/Generated.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER=com.yorsho.mobile
+APP_NAME=Yorsho
+FLUTTER_TARGET=lib/main_prod.dart
+APP_ICON_NAME=AppIcon

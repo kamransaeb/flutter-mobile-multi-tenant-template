@@ -1,0 +1,123 @@
+import 'dart:io';
+
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:yorsho_mobile/core/constants/app_dimensions.dart';
+import 'package:yorsho_mobile/core/constants/assets_icons.dart';
+
+/// Shows a non-dismissible force-update dialog using store URLs from AppBloc.
+///
+/// Store badge / URL are chosen from locale + platform (iOS App Store /
+/// Android Play). No-ops if [context] is unmounted or both URLs are empty.
+Future<void> showUpdateAppDialog(
+  BuildContext context, {
+  required String storeUrlEn,
+  required String storeUrlTr,
+  String messageKey = 'please_update_app',
+}) async {
+  if (!context.mounted) return;
+  if (storeUrlEn.isEmpty && storeUrlTr.isEmpty) return;
+
+  final isTr = context.locale.languageCode == 'tr';
+  final updateAppUrl = isTr ? storeUrlTr : storeUrlEn;
+  final updateAppAsset = _storeBadgeAsset(isTr: isTr);
+
+  await showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (dialogContext) => UpdateAppDialog(
+      messageKey: messageKey,
+      updateAppAsset: updateAppAsset,
+      updateAppUrl: updateAppUrl,
+    ),
+  );
+}
+
+String _storeBadgeAsset({required bool isTr}) {
+  if (Platform.isIOS) {
+    return isTr ? AssetsIcons.appStoreTr : AssetsIcons.appStoreEn;
+  }
+  return isTr ? AssetsIcons.googlePlayTr : AssetsIcons.googlePlayEn;
+}
+
+/// Stateless force-update dialog (title, store badge, message).
+class UpdateAppDialog extends StatelessWidget {
+  /// Creates an [UpdateAppDialog].
+  const UpdateAppDialog({
+    required this.messageKey,
+    required this.updateAppAsset,
+    required this.updateAppUrl,
+    super.key,
+  });
+
+  /// Localization key for the body message.
+  final String messageKey;
+
+  /// SVG asset path for App Store / Play badge.
+  final String updateAppAsset;
+
+  /// Store listing URL opened when the badge is tapped.
+  final String updateAppUrl;
+
+  Future<void> _openStore() async {
+    if (updateAppUrl.isEmpty) return;
+    if (await canLaunchUrlString(updateAppUrl)) {
+      await launchUrlString(
+        updateAppUrl,
+        mode: LaunchMode.externalApplication,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final width = MediaQuery.sizeOf(context).width;
+    const padding = AppDimensions.pagePadding;
+
+    return AlertDialog(
+      surfaceTintColor: Colors.transparent,
+      backgroundColor: theme.colorScheme.surface,
+      insetPadding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(padding * 2),
+      ),
+      title: Text(
+        'app_update'.tr(),
+        textAlign: TextAlign.center,
+        style: theme.textTheme.titleLarge,
+      ),
+      content: SizedBox(
+        height: width / 2,
+        width: width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: padding),
+            GestureDetector(
+              onTap: _openStore,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: padding),
+                child: SvgPicture.asset(
+                  updateAppAsset,
+                  height: AppDimensions.iconSizeExtraLarge,
+                ),
+              ),
+            ),
+            const SizedBox(height: padding),
+            Padding(
+              padding: const EdgeInsets.only(top: padding),
+              child: Text(
+                messageKey.tr(),
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
