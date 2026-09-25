@@ -65,6 +65,13 @@ abstract final class BrandTheme {
         backgroundColor: scheme.surface,
         surfaceTintColor: scheme.surfaceTint,
       ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: scheme.surfaceContainerHigh,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppDimensions.borderRadius),
+        ),
+      ),
       // Neutral AppBar: container contrast in dark, classic shadow in light.
       // No surfaceTint — seed tint is orange and washes the bar.
       appBarTheme: base.appBarTheme.copyWith(
@@ -152,17 +159,8 @@ abstract final class BrandTheme {
       fontFamily: 'Montserrat-Medium',
       fontWeight: FontWeight.bold,
     ),
-    bodySmall: TextStyle(
-      fontSize: 13,
-      fontFamily: 'Montserrat-Regular',
-    ),
-    bodyMedium: TextStyle(
-      fontSize: 15,
-      fontFamily: 'Montserrat-Regular',
-    ),
-    bodyLarge: TextStyle(
-      fontSize: 17,
-      fontFamily: 'Montserrat-Regular',
-    ),
+    bodySmall: TextStyle(fontSize: 13, fontFamily: 'Montserrat-Regular'),
+    bodyMedium: TextStyle(fontSize: 15, fontFamily: 'Montserrat-Regular'),
+    bodyLarge: TextStyle(fontSize: 17, fontFamily: 'Montserrat-Regular'),
   );
 }

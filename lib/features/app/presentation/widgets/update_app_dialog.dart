@@ -64,10 +64,7 @@ class UpdateAppDialog extends StatelessWidget {
   Future<void> _openStore() async {
     if (updateAppUrl.isEmpty) return;
     if (await canLaunchUrlString(updateAppUrl)) {
-      await launchUrlString(
-        updateAppUrl,
-        mode: LaunchMode.externalApplication,
-      );
+      await launchUrlString(updateAppUrl, mode: LaunchMode.externalApplication);
     }
   }
 
@@ -77,25 +74,20 @@ class UpdateAppDialog extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width;
     const padding = AppDimensions.pagePadding;
 
+    // Full-width card; colors/shape from [BrandTheme.dialogTheme].
     return AlertDialog(
-      surfaceTintColor: Colors.transparent,
-      backgroundColor: theme.colorScheme.surface,
       insetPadding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(padding * 2),
-      ),
+      constraints: BoxConstraints(minWidth: width, maxWidth: width),
       title: Text(
         'app_update'.tr(),
         textAlign: TextAlign.center,
         style: theme.textTheme.titleLarge,
       ),
       content: SizedBox(
-        height: width / 2,
         width: width,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: padding),
             GestureDetector(
               onTap: _openStore,
               child: Padding(
@@ -107,13 +99,10 @@ class UpdateAppDialog extends StatelessWidget {
               ),
             ),
             const SizedBox(height: padding),
-            Padding(
-              padding: const EdgeInsets.only(top: padding),
-              child: Text(
-                messageKey.tr(),
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium,
-              ),
+            Text(
+              messageKey.tr(),
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium,
             ),
           ],
         ),
